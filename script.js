@@ -77,7 +77,7 @@ async function getStockData() {
 
     console.error(error);
 
-    alert("Error fetching stock data.");
+    alert(error.message);
 
   }
 
