@@ -28,7 +28,7 @@ async function getStockData() {
     "XMJO7OCB6M3I09J9";
 
   const url =
-    `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`;
+    `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=${symbol}&apikey=${apiKey}`;
 
   try {
 
