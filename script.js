@@ -25,7 +25,7 @@ async function getStockData() {
   if (!symbol) return;
 
   const apiKey =
-    "YOUR_API_KEY_HERE";
+    "XMJO7OCB6M3I09J9";
 
   const url =
     `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`;
