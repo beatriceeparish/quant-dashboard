@@ -37,7 +37,12 @@ async function getStockData() {
 
     const data =
       await response.json();
-      console.log(data);
+      console.log("API response:", data);
+
+      if (!data["Time Series (Daily)"]) {
+        alert(JSON.stringify(data));
+        return;
+      }
 
     console.log(data);
 
