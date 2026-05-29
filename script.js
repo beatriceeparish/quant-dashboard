@@ -44,7 +44,7 @@ async function getStockData() {
       data["Time Series (Daily)"];
 
     const dates =
-      Object.keys(timeSeries).slice(0, 30).reverse();
+      Object.keys(timeSeries).reverse();
 
     const prices =
       dates.map(date =>
