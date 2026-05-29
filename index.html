@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Quant Dashboard</title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Quant Dashboard</h1>
+
+    <div class="search-box">
+
+      <input
+        type="text"
+        id="symbolInput"
+        placeholder="Enter Symbol (e.g. AAPL)"
+      >
+
+      <button id="searchButton">
+        Search
+      </button>
+
+    </div>
+
+    <div class="card">
+
+      <h2 id="companyName">
+        Company Name
+      </h2>
+
+      <p id="price">
+        Price: -
+      </p>
+
+      <p id="change">
+        Daily Change: -
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <canvas id="priceChart"></canvas>
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
