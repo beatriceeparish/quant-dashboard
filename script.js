@@ -15,7 +15,10 @@ const changeText =
 
 let chart;
 
-searchButton.addEventListener("click", getStockData);
+searchButton.addEventListener(
+  "click",
+  getStockData
+);
 
 async function getStockData() {
 
@@ -24,38 +27,21 @@ async function getStockData() {
 
   if (!symbol) return;
 
-  const apiKey =
-    "XMJO7OCB6M3I09J9";
-
-  const url =
-    `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full&symbol=${symbol}&apikey=${apiKey}`;
-
   try {
 
     const response =
-      await fetch(url);
+      await fetch(
+        `http://127.0.0.1:5000/stock/${symbol}`
+      );
 
     const data =
       await response.json();
-      console.log("API response:", data);
-
-      if (!data["Time Series (Daily)"]) {
-        alert(JSON.stringify(data));
-        return;
-      }
-
-    console.log(data);
-
-    const timeSeries =
-      data["Time Series (Daily)"];
 
     const dates =
-      Object.keys(timeSeries).reverse();
+      data.dates;
 
     const prices =
-      dates.map(date =>
-        Number(timeSeries[date]["4. close"])
-      );
+      data.prices;
 
     const latestPrice =
       prices[prices.length - 1];
@@ -66,16 +52,47 @@ async function getStockData() {
     const change =
       latestPrice - previousPrice;
 
+    const firstPrice =
+      prices[0];
+
+    const yearlyReturn =
+      ((latestPrice - firstPrice) /
+        firstPrice) * 100;
+
+    const high52 =
+      Math.max(...prices);
+
+    const low52 =
+      Math.min(...prices);
+
     companyName.innerText =
-      symbol;
+      data.ticker;
 
-    priceText.innerText =
-      `Price: $${latestPrice.toFixed(2)}`;
+    priceText.innerHTML =
+      `
+      Current Price: $${latestPrice.toFixed(2)}
+      <br>
+      1 Year Return:
+      ${yearlyReturn.toFixed(2)}%
+      `;
 
-    changeText.innerText =
-      `Daily Change: ${change.toFixed(2)}`;
+    changeText.innerHTML =
+      `
+      Daily Change:
+      ${change.toFixed(2)}
+      <br>
+      52 Week High:
+      $${high52.toFixed(2)}
+      <br>
+      52 Week Low:
+      $${low52.toFixed(2)}
+      `;
 
-    drawChart(dates, prices, symbol);
+    drawChart(
+      dates,
+      prices,
+      data.ticker
+    );
 
   }
 
@@ -83,16 +100,24 @@ async function getStockData() {
 
     console.error(error);
 
-    alert(error.message);
+    alert(
+      "Error loading stock data."
+    );
 
   }
 
 }
 
-function drawChart(dates, prices, symbol) {
+function drawChart(
+  dates,
+  prices,
+  ticker
+) {
 
   const ctx =
-    document.getElementById("priceChart");
+    document.getElementById(
+      "priceChart"
+    );
 
   if (chart) {
 
@@ -110,11 +135,22 @@ function drawChart(dates, prices, symbol) {
 
       datasets: [{
 
-        label: `${symbol} Price`,
+        label:
+          `${ticker} Price`,
 
-        data: prices
+        data: prices,
+
+        tension: 0.1
 
       }]
+
+    },
+
+    options: {
+
+      responsive: true,
+
+      maintainAspectRatio: false
 
     }
 
